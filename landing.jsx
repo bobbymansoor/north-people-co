@@ -59,23 +59,19 @@ function Landing() {
 
       {/* ============================== HERO ============================== */}
       <section className="np-hero">
-        <DynamicSky theme="dark" density={skyConfig.density} minInterval={skyConfig.minInterval} maxInterval={skyConfig.maxInterval} />
-
         {/* Soft directional glow toward the north star (top-right) */}
         <div className="np-hero-glow" aria-hidden="true" />
 
         <div className="np-hero-inner">
           <h1 className="np-hero-title">
-            <span>FIND YOUR</span>
-            <span className="np-hero-script">north</span>
-            <span>STAR HR PARTNER.</span>
+            <span>Considered HR advice</span>
+            <span>for Australian businesses.</span>
           </h1>
 
           <p className="np-hero-lead">
-            An Australian HR consultancy built to walk alongside your business
-            through every people decision — from the first hire to the
-            hardest conversation. <em>Practical advice. Steady hands.</em>
-            The partner you keep on speed-dial.
+            North People Co is a senior HR consultancy partnering with
+            Australian employers on the people decisions that matter —
+            from advisory and employee relations to capability and culture.
           </p>
 
           <div className="np-hero-cta">
@@ -129,7 +125,7 @@ function Landing() {
             <div className="np-eyebrow">01 — Our compass</div>
             <h2 className="np-h2">
               People work,<br/>
-              <span className="np-script">done well.</span>
+              done well.
             </h2>
             <figure className="np-portrait">
               <img
@@ -188,8 +184,8 @@ function Landing() {
             <div>
               <div className="np-eyebrow">02 — What we do</div>
               <h2 className="np-h2">
-                Three ways<br/>
-                <span className="np-script">we partner.</span>
+                How we<br/>
+                partner with you.
               </h2>
             </div>
             <p className="np-section-head-lede">
@@ -272,8 +268,8 @@ function Landing() {
             <div>
               <div className="np-eyebrow">03 — How we work</div>
               <h2 className="np-h2">
-                A clear path,<br/>
-                <span className="np-script">start to embed.</span>
+                Our approach,<br/>
+                end to end.
               </h2>
             </div>
             <p className="np-section-head-lede">
@@ -343,8 +339,8 @@ function Landing() {
           <div className="np-contact-left">
             <div className="np-eyebrow">05 — Get in touch</div>
             <h2 className="np-h2">
-              Let's sort it<br/>
-              <span className="np-script">out together.</span>
+              Start a<br/>
+              conversation.
             </h2>
             <p className="np-lead">
               Tell us what's on your desk — a single matter, a project, or

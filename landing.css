@@ -50,12 +50,12 @@
   text-wrap: balance;
 }
 .np-script {
-  font-family: var(--f-script);
-  font-weight: 400;
-  font-size: clamp(60px, 9vw, 124px);
-  /* Allura has tall ascenders + deep descenders. Line-height 1.0 prevents
-     adjacent text from being overlapped by glyph overflow. */
-  line-height: 1;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
   color: var(--ink);
   display: inline-block;
   margin-left: -4px;
@@ -163,7 +163,7 @@ html[data-scrolled] .np-nav .np-btn-sm:hover { background: var(--ink-deep); }
   color: var(--cream);
   overflow: hidden;
   padding: 120px 0 0;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
 }
@@ -172,15 +172,15 @@ html[data-scrolled] .np-nav .np-btn-sm:hover { background: var(--ink-deep); }
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 82% 16%, rgba(229, 201, 164, 0.22), transparent 42%),
-    radial-gradient(circle at 18% 88%, rgba(20, 36, 90, 0.6), transparent 50%);
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(229, 201, 164, 0.06), transparent 60%),
+    radial-gradient(circle at 18% 100%, rgba(20, 36, 90, 0.7), transparent 55%);
 }
 .np-hero-inner {
   position: relative;
   z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 40px 22px 110px;
+  padding: 24px 22px 110px;
   text-align: center;
   flex: 1;
   display: flex;
@@ -188,8 +188,8 @@ html[data-scrolled] .np-nav .np-btn-sm:hover { background: var(--ink-deep); }
   align-items: center;
   justify-content: center;
 }
-@media (min-width: 700px) { .np-hero-inner { padding: 56px 44px 140px; } }
-@media (min-width: 1024px) { .np-hero-inner { padding: 64px 64px 168px; } }
+@media (min-width: 700px) { .np-hero-inner { padding: 32px 44px 140px; } }
+@media (min-width: 1024px) { .np-hero-inner { padding: 40px 64px 168px; } }
 
 .np-hero-eyebrow {
   display: inline-flex;
@@ -212,9 +212,9 @@ html[data-scrolled] .np-nav .np-btn-sm:hover { background: var(--ink-deep); }
 .np-hero-title {
   font-family: var(--f-display);
   font-weight: 400;
-  font-size: clamp(54px, 9.8vw, 156px);
-  line-height: 0.9;
-  letter-spacing: 0.01em;
+  font-size: clamp(40px, 6.4vw, 96px);
+  line-height: 1.02;
+  letter-spacing: 0.005em;
   color: var(--cream);
   margin: 0 0 28px;
   text-wrap: balance;
@@ -222,11 +222,15 @@ html[data-scrolled] .np-nav .np-btn-sm:hover { background: var(--ink-deep); }
   flex-direction: column;
   align-items: center;
   gap: 0;
+  max-width: 18ch;
 }
+.np-hero-title > span + span { color: var(--tan-soft); }
 .np-hero-script {
-  font-family: var(--f-script);
-  font-weight: 400;
-  font-size: clamp(82px, 14.8vw, 240px);
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(58px, 10.2vw, 168px);
+  letter-spacing: -0.015em;
   /* Slightly tighter than 1 so the cap lines hug the script visually,
      but loose enough that ascenders/descenders don't overlap them. */
   line-height: 0.95;
