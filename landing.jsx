@@ -274,16 +274,6 @@ function Landing() {
         </div>
       </section>
 
-      {/* ========================== TRUST STRIP ========================== */}
-      <section className="np-trust">
-        <span className="np-eyebrow">Trusted by Australian teams at</span>
-        <div className="np-logos">
-          {["ATLAS", "MERIDIAN", "Northwind&Co.", "HALCYON", "VESTA", "OAKBROOK"].map((n, i) => (
-            <span key={i} className={"np-logo " + (i % 2 ? "is-serif" : "is-display")}>{n}</span>
-          ))}
-        </div>
-      </section>
-
       {/* ============================ ABOUT ============================ */}
       <section id="about" className="np-section np-about">
         <div className="np-container np-about-grid">
