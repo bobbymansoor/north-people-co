@@ -21,13 +21,13 @@ function ContactForm() {
         headers: { Accept: "application/json" },
         body: new FormData(formEl),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Something went wrong. Please try again.");
-      }
+      if (!res.ok) throw new Error("send-failed");
       setStatus("sent");
     } catch (err) {
-      setError(err.message || "Something went wrong. Please try again.");
+      // Always a friendly, generic message — never leak server/technical detail.
+      setError(
+        "Sorry, we couldn't send that just now. Please try again, or email us at hello@northpeople.co."
+      );
       setStatus("error");
     }
   }
