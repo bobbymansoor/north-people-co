@@ -295,7 +295,7 @@ function Landing() {
             </h2>
             <figure className="np-portrait">
               <img
-                src="assets/founder-lisa.webp"
+                src="assets/founder-lisa.jpg"
                 alt="Lisa Taylor-Mesiti, Founder of North People Co"
                 loading="lazy"
               />
