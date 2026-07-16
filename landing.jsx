@@ -3,6 +3,118 @@
 // content sections; dark contact/footer to bookend. Fully responsive via
 // CSS media queries (not a viewport prop).
 
+// Contact form — posts to the /api/contact Pages Function, then swaps itself
+// in place for a thank-you panel (no page navigation). Field names here must
+// match what functions/api/contact.js reads.
+function ContactForm() {
+  const [status, setStatus] = React.useState("idle"); // idle | sending | sent | error
+  const [error, setError] = React.useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const formEl = e.currentTarget;
+    setStatus("sending");
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(formEl),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Something went wrong. Please try again.");
+      }
+      setStatus("sent");
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.");
+      setStatus("error");
+    }
+  }
+
+  // Success: replace the form with a thank-you card that fills the same space.
+  if (status === "sent") {
+    return (
+      <div className="np-form np-form-thanks" role="status" aria-live="polite">
+        <div className="np-form-head">
+          <StarMark size={14} color="var(--tan-soft)" stroke={2.4} />
+          <span className="np-eyebrow np-eyebrow-tan">Enquiry received</span>
+        </div>
+        <h3 className="np-thanks-title">Thank you.</h3>
+        <p className="np-thanks-body">
+          We've got your message and a senior partner will be in touch within
+          one business day. Keep an eye on your inbox — including the spam
+          folder, just in case.
+        </p>
+      </div>
+    );
+  }
+
+  const sending = status === "sending";
+  return (
+    <form className="np-form" onSubmit={handleSubmit}>
+      <div className="np-form-head">
+        <StarMark size={14} color="var(--tan-soft)" stroke={2.4} />
+        <span className="np-eyebrow np-eyebrow-tan">Send an enquiry</span>
+      </div>
+
+      <div className="np-form-row">
+        <label className="np-field">
+          <span>Your name</span>
+          <input type="text" name="name" placeholder="Alex Mercer" required />
+        </label>
+        <label className="np-field">
+          <span>Company</span>
+          <input type="text" name="company" placeholder="Halcyon Bio" />
+        </label>
+      </div>
+      <label className="np-field">
+        <span>Work email</span>
+        <input type="email" name="email" placeholder="alex@halcyon.bio" required />
+      </label>
+      <label className="np-field">
+        <span>What you need help with</span>
+        <select name="topic" defaultValue="">
+          <option value="" disabled>Select an area…</option>
+          <option>HR Advisory / outsourced support</option>
+          <option>Employee Relations / Fair Work matter</option>
+          <option>Restructure / redundancy</option>
+          <option>Workplace investigation</option>
+          <option>Capability &amp; culture program</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label className="np-field">
+        <span>Anything else?</span>
+        <textarea rows={4} name="notes" placeholder="240 staff across two sites, planning a restructure for end of Q3…" />
+      </label>
+
+      {/* Honeypot: hidden from humans, bots tend to fill it. Named "website"
+          so it never clashes with the real Company field above. */}
+      <input
+        type="text"
+        name="website"
+        className="np-hp"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
+
+      <button type="submit" className="np-btn np-btn-primary np-btn-full" disabled={sending}>
+        {sending ? "Sending…" : "Send enquiry"}
+        <StarMark size={11} color="currentColor" stroke={2.8} />
+      </button>
+      {status === "error" && (
+        <p className="np-form-error" role="alert">{error}</p>
+      )}
+      <p className="np-form-fineprint">
+        We treat every enquiry as confidential. By submitting, you
+        agree to our <a href="#">privacy notice</a>.
+      </p>
+    </form>
+  );
+}
+
 function Landing() {
   const [t, setTweak] = useTweaks(window.TWEAK_DEFAULTS);
 
@@ -377,51 +489,7 @@ function Landing() {
             </div>
           </div>
 
-          <form className="np-form" onSubmit={(e) => { e.preventDefault(); alert("Thanks! We'll be in touch within one business day."); }}>
-            <div className="np-form-head">
-              <StarMark size={14} color="var(--tan-soft)" stroke={2.4} />
-              <span className="np-eyebrow np-eyebrow-tan">Send an enquiry</span>
-            </div>
-
-            <div className="np-form-row">
-              <label className="np-field">
-                <span>Your name</span>
-                <input type="text" name="name" placeholder="Alex Mercer" required />
-              </label>
-              <label className="np-field">
-                <span>Company</span>
-                <input type="text" name="company" placeholder="Halcyon Bio" />
-              </label>
-            </div>
-            <label className="np-field">
-              <span>Work email</span>
-              <input type="email" name="email" placeholder="alex@halcyon.bio" required />
-            </label>
-            <label className="np-field">
-              <span>What you need help with</span>
-              <select name="topic" defaultValue="">
-                <option value="" disabled>Select an area…</option>
-                <option>HR Advisory / outsourced support</option>
-                <option>Employee Relations / Fair Work matter</option>
-                <option>Restructure / redundancy</option>
-                <option>Workplace investigation</option>
-                <option>Capability &amp; culture program</option>
-                <option>Something else</option>
-              </select>
-            </label>
-            <label className="np-field">
-              <span>Anything else?</span>
-              <textarea rows={4} name="notes" placeholder="240 staff across two sites, planning a restructure for end of Q3…" />
-            </label>
-            <button type="submit" className="np-btn np-btn-primary np-btn-full">
-              Send enquiry
-              <StarMark size={11} color="currentColor" stroke={2.8} />
-            </button>
-            <p className="np-form-fineprint">
-              We treat every enquiry as confidential. By submitting, you
-              agree to our <a href="#">privacy notice</a>.
-            </p>
-          </form>
+          <ContactForm />
         </div>
       </section>
 

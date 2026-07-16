@@ -1,0 +1,27 @@
+name: Deploy to Cloudflare Pages
+
+# Runs automatically every time you push to the main branch.
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: "4"
+          # Deploys the whole repo (static files + the functions/ folder).
+          # "northpeople" must match your Pages project name exactly.
+          command: pages deploy . --project-name=northpeople --branch=main
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
