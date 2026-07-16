@@ -54,10 +54,10 @@ export async function onRequestPost({ request, env }) {
       },
       body: JSON.stringify({
         // TEMPORARY setup: the onboarding sender can ONLY deliver to the email
-        // your Resend account is registered under. Once you verify northpeople.co
+        // your Resend account is registered under. Once you verify northpeople.com.au
         // in Resend (Domains), switch these two lines to:
-        //   from: "North People Co <hello@northpeople.co>",
-        //   to:   ["hello@northpeople.co"],
+        //   from: "North People Co <hello@northpeople.com.au>",
+        //   to:   ["hello@northpeople.com.au"],
         from: "North People Co <onboarding@resend.dev>",
         to: ["bobby.mansoor@hotmail.com"], // <-- temporary; must match Resend account email
         reply_to: email, // hitting "reply" replies to the customer

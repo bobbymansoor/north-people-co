@@ -26,7 +26,7 @@ function ContactForm() {
     } catch (err) {
       // Always a friendly, generic message — never leak server/technical detail.
       setError(
-        "Sorry, we couldn't send that just now. Please try again, or email us at hello@northpeople.co."
+        "Sorry, we couldn't send that just now. Please try again, or email us at hello@northpeople.com.au."
       );
       setStatus("error");
     }
@@ -515,9 +515,9 @@ function Landing() {
             </p>
 
             <div className="np-contact-lines">
-              <a className="np-contact-line" href="mailto:hello@northpeople.co">
+              <a className="np-contact-line" href="mailto:hello@northpeople.com.au">
                 <span className="np-contact-k">Email</span>
-                <span className="np-contact-v">hello@northpeople.co</span>
+                <span className="np-contact-v">hello@northpeople.com.au</span>
               </a>
               <a className="np-contact-line" href="tel:1300667847">
                 <span className="np-contact-k">Call</span>
@@ -527,19 +527,6 @@ function Landing() {
                 <span className="np-contact-k">Hours</span>
                 <span className="np-contact-v">Mon–Fri, 8.30am – 6pm AEDT</span>
               </div>
-            </div>
-
-            <div className="np-offices">
-              {[
-                ["Sydney", "Level 4, 12 Bridge St", "NSW 2000"],
-                ["Melbourne", "8 Exhibition St", "VIC 3000"],
-                ["Brisbane", "Level 12, 145 Eagle St", "QLD 4000"],
-              ].map(([city, l1, l2]) => (
-                <div className="np-office" key={city}>
-                  <div className="np-office-city">{city}</div>
-                  <div className="np-office-addr">{l1}<br/>{l2}</div>
-                </div>
-              ))}
             </div>
           </div>
 
@@ -574,7 +561,7 @@ function Landing() {
             </div>
             <div className="np-footer-col">
               <div className="np-eyebrow np-eyebrow-tan">Connect</div>
-              <a href="mailto:hello@northpeople.co">hello@northpeople.co</a>
+              <a href="mailto:hello@northpeople.com.au">hello@northpeople.com.au</a>
               <a href="tel:1300667847">1300 667 847</a>
               <a href="#">LinkedIn</a>
               <a href="#">AHRI</a>
