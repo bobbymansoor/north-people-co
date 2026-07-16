@@ -35,7 +35,7 @@ function ContactForm() {
   // Success: replace the form with a thank-you card that fills the same space.
   if (status === "sent") {
     return (
-      <div className="np-form np-form-thanks" role="status" aria-live="polite">
+      <div id="enquiry" className="np-form np-form-thanks" role="status" aria-live="polite">
         <div className="np-form-head">
           <StarMark size={14} color="var(--tan-soft)" stroke={2.4} />
           <span className="np-eyebrow np-eyebrow-tan">Enquiry received</span>
@@ -52,7 +52,7 @@ function ContactForm() {
 
   const sending = status === "sending";
   return (
-    <form className="np-form" onSubmit={handleSubmit}>
+    <form id="enquiry" className="np-form" onSubmit={handleSubmit}>
       <div className="np-form-head">
         <StarMark size={14} color="var(--tan-soft)" stroke={2.4} />
         <span className="np-eyebrow np-eyebrow-tan">Send an enquiry</span>
@@ -162,6 +162,24 @@ function Landing() {
     };
   }, [menuOpen]);
 
+  // Mobile menu links: close the menu first (that unlocks body scroll), then
+  // smooth-scroll to the target in JS. If we relied on the native #hash jump,
+  // it fires while the body is still scroll-locked and gets swallowed — which
+  // is why tapping Contact appeared to do nothing.
+  const handleNavClick = (e) => {
+    const href = e.currentTarget.getAttribute("href") || "";
+    if (!href.startsWith("#") || href === "#") return;
+    e.preventDefault();
+    setMenuOpen(false);
+    const el = document.getElementById(href.slice(1));
+    if (!el) return;
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() =>
+        el.scrollIntoView({ behavior: "smooth", block: "start" })
+      )
+    );
+  };
+
   return (
     <div className={`np-root np-mood-${t.mood} np-voice-${t.headlineVoice}`}>
       {/* ============================== NAV ============================== */}
@@ -173,9 +191,9 @@ function Landing() {
             <a href="#services">Services</a>
             <a href="#approach">Approach</a>
             <a href="#voices">Voices</a>
-            <a href="#contact">Contact</a>
+            <a href="#enquiry">Contact</a>
           </nav>
-          <a href="#contact" className="np-btn np-btn-sm">Get advice</a>
+          <a href="#enquiry" className="np-btn np-btn-sm">Get advice</a>
           <button
             className="np-nav-burger"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -194,13 +212,13 @@ function Landing() {
           </button>
         </div>
         {menuOpen && (
-          <nav className="np-nav-mobile" onClick={() => setMenuOpen(false)}>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#approach">Approach</a>
-            <a href="#voices">Voices</a>
-            <a href="#contact">Contact</a>
-            <a href="#contact" className="np-btn np-btn-primary np-btn-full">Get advice</a>
+          <nav className="np-nav-mobile">
+            <a href="#about" onClick={handleNavClick}>About</a>
+            <a href="#services" onClick={handleNavClick}>Services</a>
+            <a href="#approach" onClick={handleNavClick}>Approach</a>
+            <a href="#voices" onClick={handleNavClick}>Voices</a>
+            <a href="#enquiry" onClick={handleNavClick}>Contact</a>
+            <a href="#enquiry" onClick={handleNavClick} className="np-btn np-btn-primary np-btn-full">Get advice</a>
           </nav>
         )}
       </header>

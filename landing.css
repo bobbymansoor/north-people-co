@@ -196,6 +196,7 @@ html[data-scrolled] .np-nav-open {
 
 /* Fixed nav overlaps section tops on anchor jumps — offset the scroll target. */
 section[id] { scroll-margin-top: 76px; }
+#enquiry { scroll-margin-top: 90px; }
 
 /* ============================== HERO ============================== */
 .np-hero {
