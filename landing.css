@@ -191,15 +191,16 @@ html[data-scrolled] .np-nav-open {
   border-bottom: 1px solid rgba(245, 238, 221, 0.08);
 }
 .np-nav-mobile a:active { opacity: 0.6; }
-.np-nav-mobile .np-btn-primary {
+/* a.np-btn-primary (0,2,1) outranks the generic .np-nav-mobile a (0,1,1) rule
+   that turns links cream — otherwise the label is cream-on-cream and invisible. */
+.np-nav-mobile a.np-btn-primary {
   margin-top: 18px;
   border-bottom: 0;
   justify-content: center;
-  /* Restore the dark label — the generic .np-nav-mobile a rule above turns
-     links cream, which is invisible on this button's cream background. */
+  background: var(--cream);
   color: var(--ink-deep);
 }
-.np-nav-mobile .np-btn-primary:active { opacity: 1; }
+.np-nav-mobile a.np-btn-primary:active { opacity: 1; }
 @media (min-width: 1024px) { .np-nav-mobile { display: none; } }
 @keyframes np-nav-drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
