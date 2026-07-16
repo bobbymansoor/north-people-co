@@ -53,11 +53,13 @@ export async function onRequestPost({ request, env }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // Until you verify your domain in Resend, keep the onboarding sender.
-        // After verifying northpeople.co, change to e.g.
-        //   "North People Co <hello@northpeople.co>"
+        // TEMPORARY setup: the onboarding sender can ONLY deliver to the email
+        // your Resend account is registered under. Once you verify northpeople.co
+        // in Resend (Domains), switch these two lines to:
+        //   from: "North People Co <hello@northpeople.co>",
+        //   to:   ["hello@northpeople.co"],
         from: "North People Co <onboarding@resend.dev>",
-        to: ["hello@northpeople.co"], // <-- where YOU receive enquiries
+        to: ["bobby.mansoor@hotmail.com"], // <-- temporary; must match Resend account email
         reply_to: email, // hitting "reply" replies to the customer
         subject: `New website enquiry from ${name}`,
         text,
@@ -65,15 +67,10 @@ export async function onRequestPost({ request, env }) {
     });
 
     if (!resend.ok) {
-      // Surface Resend's real error so failures are diagnosable. The Resend
-      // body explains exactly what's wrong (bad key, unverified sender/domain,
-      // testing-recipient restriction, etc.). Shows in the form + function logs.
-      const detail = await resend.text();
-      console.error("Resend error", resend.status, detail);
-      return json(
-        { error: `Email service error (${resend.status}). ${detail}` },
-        502
-      );
+      // Log Resend's real error to the function logs for diagnosis, but show
+      // the visitor a clean message.
+      console.error("Resend error", resend.status, await resend.text());
+      return json({ error: "Could not send right now. Please try again." }, 502);
     }
 
     return json({ ok: true });
