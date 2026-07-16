@@ -117,6 +117,7 @@ function ContactForm() {
 
 function Landing() {
   const [t, setTweak] = useTweaks(window.TWEAK_DEFAULTS);
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   // Sky activity → dynamic-sky props
   const skyConfig = {
@@ -147,10 +148,24 @@ function Landing() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock background scroll while the mobile menu is open, and auto-close it if
+  // the viewport grows to desktop width (where the burger disappears).
+  React.useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (!menuOpen) return;
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const close = () => setMenuOpen(false);
+    mq.addEventListener("change", close);
+    return () => {
+      mq.removeEventListener("change", close);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
     <div className={`np-root np-mood-${t.mood} np-voice-${t.headlineVoice}`}>
       {/* ============================== NAV ============================== */}
-      <header className="np-nav">
+      <header className={`np-nav${menuOpen ? " np-nav-open" : ""}`}>
         <div className="np-nav-inner">
           <NorthWordmark size={1.05} layout="horizontal" color="currentColor" />
           <nav className="np-nav-links">
@@ -161,12 +176,33 @@ function Landing() {
             <a href="#contact">Contact</a>
           </nav>
           <a href="#contact" className="np-btn np-btn-sm">Get advice</a>
-          <button className="np-nav-burger" aria-label="Menu">
-            <svg width="22" height="14" viewBox="0 0 22 14">
-              <path d="M0 1h22M0 7h22M0 13h22" stroke="currentColor" strokeWidth="1.6"/>
-            </svg>
+          <button
+            className="np-nav-burger"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            {menuOpen ? (
+              <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+                <path d="M4 4l14 14M18 4L4 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+            ) : (
+              <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true">
+                <path d="M0 1h22M0 7h22M0 13h22" stroke="currentColor" strokeWidth="1.6"/>
+              </svg>
+            )}
           </button>
         </div>
+        {menuOpen && (
+          <nav className="np-nav-mobile" onClick={() => setMenuOpen(false)}>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#approach">Approach</a>
+            <a href="#voices">Voices</a>
+            <a href="#contact">Contact</a>
+            <a href="#contact" className="np-btn np-btn-primary np-btn-full">Get advice</a>
+          </nav>
+        )}
       </header>
 
       {/* ============================== HERO ============================== */}

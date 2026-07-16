@@ -156,6 +156,47 @@ html[data-scrolled] .np-nav {
 html[data-scrolled] .np-nav .np-btn-sm { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 html[data-scrolled] .np-nav .np-btn-sm:hover { background: var(--ink-deep); }
 
+/* While the mobile menu is open, force the whole bar dark + solid so it reads
+   clearly over any content and matches the dropdown panel (overrides scrolled). */
+.np-nav-open,
+html[data-scrolled] .np-nav-open {
+  background: var(--ink-deep);
+  color: var(--cream);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+/* Mobile dropdown menu — revealed by the burger, hidden at desktop width. */
+.np-nav-mobile {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 22px 24px;
+  background: var(--ink-deep);
+  color: var(--cream);
+  border-top: 1px solid rgba(245, 238, 221, 0.10);
+  animation: np-nav-drop .18s ease;
+}
+@media (min-width: 700px) { .np-nav-mobile { padding: 6px 44px 28px; } }
+.np-nav-mobile a {
+  padding: 15px 2px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  border-bottom: 1px solid rgba(245, 238, 221, 0.08);
+}
+.np-nav-mobile a:active { opacity: 0.6; }
+.np-nav-mobile .np-btn-primary {
+  margin-top: 18px;
+  border-bottom: 0;
+  justify-content: center;
+}
+@media (min-width: 1024px) { .np-nav-mobile { display: none; } }
+@keyframes np-nav-drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Fixed nav overlaps section tops on anchor jumps — offset the scroll target. */
+section[id] { scroll-margin-top: 76px; }
+
 /* ============================== HERO ============================== */
 .np-hero {
   position: relative;
