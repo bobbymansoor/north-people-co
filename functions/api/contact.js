@@ -65,7 +65,15 @@ export async function onRequestPost({ request, env }) {
     });
 
     if (!resend.ok) {
-      return json({ error: "Could not send right now. Please try again." }, 502);
+      // Surface Resend's real error so failures are diagnosable. The Resend
+      // body explains exactly what's wrong (bad key, unverified sender/domain,
+      // testing-recipient restriction, etc.). Shows in the form + function logs.
+      const detail = await resend.text();
+      console.error("Resend error", resend.status, detail);
+      return json(
+        { error: `Email service error (${resend.status}). ${detail}` },
+        502
+      );
     }
 
     return json({ ok: true });
