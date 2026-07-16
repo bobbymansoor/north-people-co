@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="North People Co">
+  <rect width="64" height="64" rx="13" fill="#0B1437"/>
+  <!-- North People Co four-point star (from the brand mark) -->
+  <path transform="translate(32 32) scale(0.108)"
+        d="M 0 -240
+           C 50 -120, 70 -90, 240 0
+           C 70 90, 50 120, 0 240
+           C -50 120, -70 90, -240 0
+           C -70 -90, -50 -120, 0 -240 Z"
+        fill="#E5C9A4"/>
+  <!-- Subtle twinkles, echoing the hero sky -->
+  <circle cx="46.5" cy="15.5" r="1.5" fill="#F5EEDD" opacity="0.75"/>
+  <circle cx="15" cy="49" r="1.2" fill="#F5EEDD" opacity="0.6"/>
+</svg>
